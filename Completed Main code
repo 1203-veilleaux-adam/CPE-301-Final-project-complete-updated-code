@@ -372,6 +372,7 @@ void displayMotorMovement(){
   stringPrint(" ");
   stringPrint("\n");
 }
+
 void setToDisabled(){
   state = 'd';
   printErrorOnce = 0;
@@ -414,4 +415,34 @@ void U0init(int U0baud)
  *myUCSR0B = 0x18;
  *myUCSR0C = 0x06;
  *myUBRR0  = tbaud;
+
+void displayStateChange(){
+  int data;
+  DateTime now = rtc.now();
+  stringPrint(" ");
+  stringPrint("\n");
+  stringPrint("The state has changed at the following time: ");
+  stringPrint("/");
+  data = now.year(), DEC;
+  printInt(data);
+  stringPrint("/");
+  data = now.month(), DEC;
+  printInt(data);
+  stringPrint("/");
+  data = now.day(), DEC;
+  printInt(data);
+  stringPrint(" (");
+  stringPrint(daysOfTheWeek[now.dayOfTheWeek()]);
+  stringPrint(") ");
+  data = now.hour(), DEC;
+  printInt(data);
+  stringPrint(":");
+  data = now.minute(), DEC;
+  printInt(data);
+  stringPrint(":");
+  data= now.second(), DEC;
+  printInt(data);
+  stringPrint(" ");
+  stringPrint("\n");
+
 }
