@@ -2,3 +2,77 @@
 //Ryan Zheng
 //Ronald Icely
 //Adam Veilleaux
+void stringPrint(String s){
+  int  i =0;
+  while(s[i] != '\0'){
+    U0putchar(s[i]);
+    i++;
+  }
+}
+void stringPrintLn(String s){
+  int  i = 0;
+  while(s[i] != '\0'){
+    U0putchar(s[i]);
+    i++;
+  }
+  U0putchar('\n');
+}
+void printFloat(float a){
+  int c = a;
+  int d;
+  d = c /1000;
+  printChar(d);
+  d = c /100;
+  printChar(d);
+  d = c / 10;
+  printChar(d);
+  d = c  % 1;
+  printChar(d);
+}
+void printInt(int a){
+  int d;
+  d = a /1000;
+  a = a - (d*1000);
+  printChar(d);
+  d = a /100;
+  a = a - (d*100);
+  printChar(d);
+  d = a / 10;
+  a = a - (d*10);
+  printChar(d);
+  d = a  / 1;
+  a = a - (d);
+  printChar(d);
+}
+void printChar(int a){
+  if(a == 0){
+    U0putchar('0');
+  }
+  if(a == 1){
+    U0putchar('1');
+  }
+  if(a == 2){
+    U0putchar('2');
+  }
+  if(a == 3){
+    U0putchar('3');
+  }
+  if(a == 4){
+    U0putchar('4');
+  }
+  if(a == 5){
+    U0putchar('5');
+  }
+  if(a == 6){
+    U0putchar('6');
+  }
+  if(a == 7){
+    U0putchar('7');
+  }
+  if(a == 8){
+    U0putchar('8');
+  }
+  if(a == 9){
+    U0putchar('9');
+  }
+}
