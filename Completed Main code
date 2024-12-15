@@ -113,6 +113,45 @@ void loop(){
   
 }
 
+void changeState(){
+  int time = millis();
+  int chk = DHT.read11(DHT11_PIN);
+  if(state != previousState){//Check for a state change
+    displayStateChange();
+    previousState = state;
+  }
+  if(((state =='i')||(state =='r')) && (getWaterValue()< WATER_THRESHOLD)){
+    state = 'e';
+  } 
+  if((state == 'r') && (DHT.temperature<TEMP_THRESHOLD)){
+    state = 'i';
+  }
+  if((state == 'i') && (DHT.temperature>TEMP_THRESHOLD)){
+    state = 'r';
+  }
+}
+void printEnvironment(){
+  lcd.clear();
+  int chk = DHT.read11(DHT11_PIN);
+  float a = DHT.temperature;
+  stringPrint("Temperature = ");
+  printFloat(a);
+  stringPrint("\n");
+  stringPrint("Humidity = ");
+  a = DHT.humidity;
+  printFloat(a);
+  stringPrint("\n");
+  lcd.setCursor(0, 0); // move cursor to (0, 0)
+  lcd.print("TEMP:"); // print message at (0, 0)
+  lcd.setCursor(6, 0); // move cursor to (0, 0)
+  lcd.print(DHT.temperature);
+  lcd.setCursor(0, 1); // move cursor to (2, 1)
+  lcd.print("HUMIDITY:"); // print message at (2, 1)
+  lcd.setCursor(11, 1); // move cursor to (0, 0)
+  lcd.print(DHT.humidity);
+
+}
+
 void stringPrint(String s){
   int  i =0;
   while(s[i] != '\0'){
