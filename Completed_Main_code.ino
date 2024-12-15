@@ -415,7 +415,7 @@ void U0init(int U0baud)
  *myUCSR0B = 0x18;
  *myUCSR0C = 0x06;
  *myUBRR0  = tbaud;
-
+}
 void displayStateChange(){
   int data;
   DateTime now = rtc.now();
