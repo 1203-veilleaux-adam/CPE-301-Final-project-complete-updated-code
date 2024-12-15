@@ -152,6 +152,30 @@ void printEnvironment(){
 
 }
 
+void runStates(){
+  if(state == 'd'){
+    fanOff();
+    turnOnLED(YELLOW);
+    ventMovement();
+  }
+  if(state == 'i'){
+    fanOff();
+    sendEnvInfo();
+    turnOnLED(GREEN);
+    ventMovement();
+  }
+  if(state == 'r'){
+    fanOn();
+    sendEnvInfo();
+    turnOnLED(BLUE);
+    ventMovement();
+  }
+  if(state == 'e'){
+    turnOnLED(RED);
+    displayErrorMessage();
+    fanOff();
+  }
+}
 void stringPrint(String s){
   int  i =0;
   while(s[i] != '\0'){
