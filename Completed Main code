@@ -303,3 +303,48 @@ void my_delay(unsigned int freq)
   // reset TOV           
   *myTIFR1 |= 0x01;
 }
+void sendEnvInfo(){
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;
+    printEnvironment();
+  }
+}
+void ventMovement(){//Pin A0 will be the analog PIN
+  if(adc_read(0)<VENT_LOWER_THRESHOLD){
+      myStepper.setSpeed(10);
+      myStepper.step(-stepsPerRevolution);
+      displayMotorMovement();
+  }
+  if(VENT_UPPER_THRESHOLD<adc_read(0)){
+      myStepper.setSpeed(10);
+      myStepper.step(stepsPerRevolution);
+      displayMotorMovement();
+  }
+
+}
+void displayMotorMovement(){
+  DateTime now = rtc.now();
+  int data;
+  stringPrint("The vent has changed at the following time: ");
+  data = now.year(), DEC;
+  printInt(data);
+  stringPrint("/");
+  data  = now.month(), DEC;
+  printInt(data);
+  stringPrint("/");
+  data = now.day(), DEC;
+  printInt(data);
+  stringPrint(" (");
+  stringPrint(daysOfTheWeek[now.dayOfTheWeek()]);
+  stringPrint(") ");
+  data = now.hour(), DEC;
+  printInt(data);
+  stringPrint(":");
+  data =now.minute(), DEC;
+  printInt(data);
+  stringPrint(":");
+  data = now.second(), DEC;
+  printInt(data);
+  stringPrint(" ");
+  stringPrint("\n");
+}
