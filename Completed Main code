@@ -75,6 +75,43 @@ unsigned long previousMillis = 0;
 const long interval = 60000;
 unsigned long currentMillis = 0;
 
+void setup()
+{
+  U0init(9600);
+  adc_init();//Start the ADC Read
+  lcd.begin(16, 2);
+  //Set the Water sensor
+  *ddrC |= 0b00000010;
+  *portC &= 0b11111101; //start with water sensor off
+  rtc.begin();
+  lcd.begin(16, 2); // set up number of columns and rows
+  state = 'd';//state is disabled
+  previousState = 'd';//Set the previous state
+  //Set the ISR Stop Button pin 19
+  *ddrD &= 0b11111011; //set to input with pullup
+  *portD |= 0b00000100;
+  attachInterrupt (digitalPinToInterrupt(19),setToDisabled,RISING);
+  //Set the ISR start Button pin 18
+  *ddrD &= 0b11110111; //set to input with pullup
+  *portD |= 0b00001000;
+  attachInterrupt (digitalPinToInterrupt(18),startCooler,RISING);
+  //Set the ISR reset button to pin 3
+  *ddrE &= 0b11011111; //set to input with pullup
+  *portE |= 0b00100000;
+  attachInterrupt (digitalPinToInterrupt(3),resetCooler,RISING);
+  //Set up the lights
+  LEDs_setup();
+  //Set up fan
+  fanMotor_setup();
+  //Set up the vent potentiometer
+}
+
+void loop(){
+  runStates();
+  changeState();
+  currentMillis = millis();
+  
+}
 
 void stringPrint(String s){
   int  i =0;
